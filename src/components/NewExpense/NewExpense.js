@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import './NewExpense.css'
 import ExpenseForm from './ExpenseForm'
 
@@ -8,10 +9,23 @@ const NewExpense = (props) => {
             id: Math.random().toString()
        }
       props.addExpense(expenseData);
+      setShowForm(false)
     }
 
+    const [showForm, setShowForm] = useState(false)
+
+   const setEditing =() => {
+       setShowForm(true)
+   }
+
+   const cancelEditing = () => {
+       setShowForm(false)
+   }
     return <div className="new-expense">
-        <ExpenseForm onSaveData={saveDataHandler}/>
+        
+            {!showForm && <button onClick={setEditing}>Add Item</button>}
+            {showForm && <ExpenseForm showForm={cancelEditing} onSaveData={saveDataHandler}/>}
+        
     </div>
 }
 
